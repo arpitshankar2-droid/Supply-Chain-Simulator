@@ -80,7 +80,7 @@ export default function SetupScreen() {
         <div className="mt-5 pt-4 border-t border-dark-700">
           <div className={`flex items-center gap-2 text-[11px] ${state.config.apiKey ? 'text-accent-green' : 'text-accent-yellow'}`}>
             <span className="w-1.5 h-1.5 rounded-full bg-current" />
-            {state.config.apiKey ? 'Live AI Mode' : 'Demo Mode (hardcoded fallbacks)'}
+            {state.config.apiKey ? 'Live AI Mode' : 'Demo Mode (simulated responses)'}
           </div>
         </div>
       </div>
