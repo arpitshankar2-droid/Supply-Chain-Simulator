@@ -12,6 +12,8 @@ What makes it different:
 
 Key takeaway: AI agents work best when they have clear boundaries and humans stay in the loop for high-stakes decisions.
 
+Try it yourself → https://supply-chain-simulator.onrender.com
+
 #SupplyChain #AI #Logistics #DecisionIntelligence #AgenticAI`;
 
   const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://supply-chain-simulator.onrender.com')}&text=${encodeURIComponent(postText)}`;
