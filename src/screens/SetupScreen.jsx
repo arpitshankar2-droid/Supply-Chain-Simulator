@@ -1,4 +1,5 @@
 import { useSimulation } from '../hooks/useSimulation';
+import { SCREENS } from '../config/constants';
 import { getDisruption } from '../data/disruptions';
 import { LANES } from '../data/lanes';
 import { CARRIERS } from '../data/carriers';
@@ -10,7 +11,7 @@ import ApprovalThreshold from '../components/setup/ApprovalThreshold';
 import PriorityToggle from '../components/setup/PriorityToggle';
 
 export default function SetupScreen() {
-  const { state } = useSimulation();
+  const { state, setScreen } = useSimulation();
   const disruption = getDisruption(state.config.disruptionId);
 
   const primaryLaneId = disruption?.affectedLanes?.[0];
@@ -24,11 +25,11 @@ export default function SetupScreen() {
         <h2 className="text-sm font-bold text-dark-100 mb-4 uppercase tracking-wide">How it works</h2>
         <div className="space-y-3">
           {[
-            { step: '1', title: 'Configure', desc: 'Pick a disruption and set parameters', icon: '⚙️' },
-            { step: '2', title: 'Visualise', desc: 'Watch the map, trigger an alert', icon: '🗺️' },
-            { step: '3', title: 'AI Agents', desc: 'Analyst assesses risk, Negotiator gets rates', icon: '🤖' },
-            { step: '4', title: 'Approve', desc: 'Human-in-the-loop for high-cost plans', icon: '✅' },
-            { step: '5', title: 'Report', desc: 'Before vs after comparison', icon: '📊' },
+            { step: '1', title: 'Configure', desc: 'Pick a disruption and set parameters' },
+            { step: '2', title: 'Visualise', desc: 'Watch the map, trigger an alert' },
+            { step: '3', title: 'AI Agents', desc: 'Analyst assesses risk, Negotiator gets rates' },
+            { step: '4', title: 'Approve', desc: 'Human-in-the-loop for high-cost plans' },
+            { step: '5', title: 'Report', desc: 'Before vs after comparison' },
           ].map(s => (
             <div key={s.step} className="flex items-start gap-3">
               <div className="w-6 h-6 rounded-full bg-accent-blue/15 text-accent-blue text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">{s.step}</div>
@@ -84,7 +85,7 @@ export default function SetupScreen() {
         </div>
       </div>
 
-      {/* Right — Configuration panel */}
+      {/* Right — Configuration panel + Start button */}
       <div className="flex-1 overflow-y-auto p-6">
         <div className="max-w-2xl mx-auto space-y-5">
           <DisruptionSelector />
@@ -95,6 +96,16 @@ export default function SetupScreen() {
           </div>
           <div className="h-px bg-dark-700" />
           <PriorityToggle />
+
+          {/* Start button — center of config area */}
+          <div className="pt-4 text-center">
+            <button
+              onClick={() => setScreen(SCREENS.MAP)}
+              className="px-10 py-3.5 bg-accent-blue hover:bg-accent-blue/90 text-white font-semibold rounded-lg transition-colors text-sm shadow-lg shadow-accent-blue/20"
+            >
+              Start Simulation →
+            </button>
+          </div>
         </div>
       </div>
     </div>
