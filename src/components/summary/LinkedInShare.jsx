@@ -1,22 +1,15 @@
 export default function LinkedInShare() {
-  const postText = `Just tested a Self-Healing Supply Chain Simulator — and the results are wild. 🚀
-
-Two AI agents detected a logistics disruption on an Indian freight corridor, assessed inventory risk, negotiated carrier rates, and rerouted shipments in 47 seconds.
+  const postText = `Built a Self-Healing Supply Chain Simulator with two AI agents that detect disruptions, assess risk, negotiate carrier rates, and reroute shipments — all in 47 seconds.
 
 The old way? 4–24 hours of manual calls and spreadsheets.
 
-What makes it different:
-→ Bounded autonomy: agents negotiate freely, but humans approve high-cost decisions
-→ Real-time analysis: severity scoring, stockout probability, demand forecasting
-→ Multi-agent handoff: Analyst agent passes structured data to Negotiator agent
+Bounded autonomy: agents work fast, but humans approve high-cost decisions.
 
-Key takeaway: AI agents work best when they have clear boundaries and humans stay in the loop for high-stakes decisions.
-
-Try it yourself → https://supply-chain-simulator.onrender.com
+Try it yourself: https://supply-chain-simulator.onrender.com
 
 #SupplyChain #AI #Logistics #DecisionIntelligence #AgenticAI`;
 
-  const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://supply-chain-simulator.onrender.com')}&text=${encodeURIComponent(postText)}`;
+  const url = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(postText)}`;
 
   return (
     <button
