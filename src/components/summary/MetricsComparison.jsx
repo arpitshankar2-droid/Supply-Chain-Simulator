@@ -6,6 +6,13 @@ export default function MetricsComparison({ before, after }) {
   return (
     <div className="grid grid-cols-2 gap-4">
       <MetricCard
+        label="Response Time"
+        before="4–24 hrs"
+        after="47 sec"
+        format="text"
+        highlight
+      />
+      <MetricCard
         label="Shipping Rate"
         before={before.rate}
         after={after.rate}

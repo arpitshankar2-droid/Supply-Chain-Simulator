@@ -23,9 +23,9 @@ export async function runOrchestrator(state, actions, streamLog) {
 
   const agent1Result = await runAnalystAgent(config, disruption, addLog1);
 
-  // Stream logs with pacing
+  // Stream logs with pacing and progressive timestamps
   for (const log of agent1Logs) {
-    actions.addAgentLog('agent1', log);
+    actions.addAgentLog('agent1', { ...log, timestamp: Date.now() });
     await delay(TIMING.LOG_LINE_PACE);
   }
 
@@ -47,9 +47,9 @@ export async function runOrchestrator(state, actions, streamLog) {
 
   const agent2Result = await runNegotiatorAgent(agent1Result, config, addLog2);
 
-  // Stream logs with pacing
+  // Stream logs with pacing and progressive timestamps
   for (const log of agent2Logs) {
-    actions.addAgentLog('agent2', log);
+    actions.addAgentLog('agent2', { ...log, timestamp: Date.now() });
     await delay(TIMING.LOG_LINE_PACE);
   }
 

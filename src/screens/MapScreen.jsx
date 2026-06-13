@@ -69,6 +69,33 @@ export default function MapScreen() {
         </p>
       </div>
 
+      {/* Prominent trigger banner — shown above map during normal operations */}
+      {state.map.phase === 'normal' && !alertTriggered && (
+        <div className="mb-4 animate-fade-in-up">
+          <button
+            onClick={handleTriggerAlert}
+            className="w-full group relative flex items-center justify-center gap-4 px-6 py-4 bg-accent-red/10 hover:bg-accent-red/20 border-2 border-accent-red/50 hover:border-accent-red rounded-xl transition-all duration-300"
+          >
+            <span className="absolute inset-0 rounded-xl border-2 border-accent-red/30 animate-pulse-ring" />
+
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-accent-red shrink-0">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+
+            <div className="text-left">
+              <div className="text-accent-red font-bold text-base">Trigger Disruption Alert</div>
+              <div className="text-dark-400 text-xs">
+                Click to activate AI agents — {disruption.icon} {disruption.name} at {disruption.affectedCity.charAt(0).toUpperCase() + disruption.affectedCity.slice(1)}
+              </div>
+            </div>
+
+            <span className="ml-auto text-accent-red text-xl font-semibold group-hover:translate-x-1 transition-transform">→</span>
+          </button>
+        </div>
+      )}
+
       <SupplyChainMap mapState={state.map} disruption={disruption} />
 
       {/* Loss ticker — shown after disruption is triggered */}
@@ -111,34 +138,6 @@ export default function MapScreen() {
         </div>
       )}
 
-      {/* Trigger Alert Button — shown only during normal operations */}
-      {state.map.phase === 'normal' && !alertTriggered && (
-        <div className="mt-6 text-center animate-fade-in-up">
-          <button
-            onClick={handleTriggerAlert}
-            className="group relative inline-flex items-center gap-3 px-8 py-4 bg-accent-red/10 hover:bg-accent-red/20 border-2 border-accent-red/50 hover:border-accent-red rounded-xl transition-all duration-300"
-          >
-            <span className="absolute inset-0 rounded-xl border-2 border-accent-red/30 animate-pulse-ring" />
-
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-accent-red">
-              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-              <line x1="12" y1="9" x2="12" y2="13" />
-              <line x1="12" y1="17" x2="12.01" y2="17" />
-            </svg>
-
-            <div className="text-left">
-              <div className="text-accent-red font-semibold text-sm">Trigger Disruption Alert</div>
-              <div className="text-dark-400 text-xs">
-                Simulate: {disruption.icon} {disruption.name} at {disruption.affectedCity.charAt(0).toUpperCase() + disruption.affectedCity.slice(1)}
-              </div>
-            </div>
-          </button>
-
-          <p className="mt-3 text-xs text-dark-500">
-            Click to simulate the <span className="text-dark-300">{disruption.name}</span> scenario and watch AI agents respond in real-time
-          </p>
-        </div>
-      )}
     </div>
   );
 }

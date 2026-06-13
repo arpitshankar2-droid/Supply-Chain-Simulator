@@ -1,21 +1,21 @@
 import { formatCurrency } from '../../utils/formatCurrency';
 
-export default function MetricCard({ label, before, after, format }) {
+export default function MetricCard({ label, before, after, format, highlight }) {
   if (format === 'text') {
     return (
-      <div className="bg-dark-800 border border-dark-700 rounded-lg p-4">
-        <div className="text-xs text-dark-400 mb-3 font-medium uppercase tracking-wide">{label}</div>
+      <div className={`rounded-lg p-4 ${highlight ? 'bg-accent-green/5 border-2 border-accent-green/30' : 'bg-dark-800 border border-dark-700'}`}>
+        <div className={`text-xs mb-3 font-medium uppercase tracking-wide ${highlight ? 'text-accent-green' : 'text-dark-400'}`}>{label}</div>
         <div className="flex items-end justify-between">
           <div>
             <div className="text-dark-500 text-xs mb-0.5">Before</div>
-            <div className="text-sm font-mono text-dark-300">{before}</div>
+            <div className={`font-mono ${highlight ? 'text-lg text-dark-300' : 'text-sm text-dark-300'}`}>{before}</div>
           </div>
-          <div className="text-sm font-medium px-2 py-1 rounded text-accent-blue bg-accent-blue/10">
+          <div className={`text-sm font-medium px-2 py-1 rounded ${highlight ? 'text-accent-green bg-accent-green/10' : 'text-accent-blue bg-accent-blue/10'}`}>
             →
           </div>
           <div className="text-right">
             <div className="text-dark-500 text-xs mb-0.5">After</div>
-            <div className="text-sm font-mono text-dark-100 font-semibold">{after}</div>
+            <div className={`font-mono font-semibold ${highlight ? 'text-lg text-accent-green' : 'text-sm text-dark-100'}`}>{after}</div>
           </div>
         </div>
       </div>
