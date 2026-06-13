@@ -1,49 +1,43 @@
-import Anthropic from '@anthropic-ai/sdk';
-import { CLAUDE_MODEL, CLAUDE_MAX_TOKENS } from '../config/constants';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import { AI_MODEL, AI_MAX_TOKENS } from '../config/constants';
 
-let client = null;
+let model = null;
 
 export function initClaudeClient(apiKey) {
   if (!apiKey) {
-    client = null;
+    model = null;
     return false;
   }
   try {
-    client = new Anthropic({
-      apiKey,
-      dangerouslyAllowBrowser: true,
-    });
+    const genAI = new GoogleGenerativeAI(apiKey);
+    model = genAI.getGenerativeModel({ model: AI_MODEL });
     return true;
   } catch {
-    client = null;
+    model = null;
     return false;
   }
 }
 
-export async function callClaude(systemPrompt, userPrompt, maxTokens = CLAUDE_MAX_TOKENS) {
-  if (!client) return null;
+export async function callClaude(systemPrompt, userPrompt, maxTokens = AI_MAX_TOKENS) {
+  if (!model) return null;
 
   try {
-    const response = await client.messages.create({
-      model: CLAUDE_MODEL,
-      max_tokens: maxTokens,
-      temperature: 1,
-      system: systemPrompt,
-      messages: [{ role: 'user', content: userPrompt }],
+    const result = await model.generateContent({
+      contents: [{ role: 'user', parts: [{ text: `${systemPrompt}\n\n${userPrompt}` }] }],
+      generationConfig: {
+        maxOutputTokens: maxTokens,
+        temperature: 1,
+      },
     });
 
-    const text = response.content
-      .filter(c => c.type === 'text')
-      .map(c => c.text)
-      .join('');
-
-    return text;
+    const response = result.response;
+    return response.text();
   } catch (err) {
-    console.warn('Claude API call failed, using fallback:', err.message);
+    console.warn('AI API call failed, using fallback:', err.message);
     return null;
   }
 }
 
 export function isClaudeAvailable() {
-  return client !== null;
+  return model !== null;
 }

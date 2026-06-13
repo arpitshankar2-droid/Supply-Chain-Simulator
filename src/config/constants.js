@@ -61,5 +61,5 @@ export const APPROVAL_STATUS = {
   SKIPPED: 'skipped',
 };
 
-export const CLAUDE_MODEL = 'claude-sonnet-4-6';
-export const CLAUDE_MAX_TOKENS = 1024;
+export const AI_MODEL = 'gemini-2.0-flash';
+export const AI_MAX_TOKENS = 1024;
