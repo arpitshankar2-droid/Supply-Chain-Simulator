@@ -27,6 +27,7 @@ export async function callClaude(systemPrompt, userPrompt, maxTokens = CLAUDE_MA
     const response = await client.messages.create({
       model: CLAUDE_MODEL,
       max_tokens: maxTokens,
+      temperature: 1,
       system: systemPrompt,
       messages: [{ role: 'user', content: userPrompt }],
     });
