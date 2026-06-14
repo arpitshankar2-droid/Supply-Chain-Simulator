@@ -56,12 +56,12 @@ export default function SummaryScreen() {
               ? 'bg-accent-purple/20 text-accent-purple'
               : 'bg-accent-blue/15 text-accent-blue'
           }`}>
-            {summary.usedClaude ? 'Claude AI (Live)' : 'Demo Mode — Simulated Responses'}
+            {summary.usedClaude ? 'Gemini AI (Live)' : 'Demo Mode — Simulated Responses'}
           </span>
         </div>
         {!summary.usedClaude && (
           <p className="text-[11px] text-dark-500 mt-2">
-            This run used pre-built responses to demonstrate the full agent workflow. Add a Claude API key on the setup screen to enable live AI-generated analysis and negotiation.
+            This run used pre-built responses to demonstrate the full agent workflow. Add a Gemini API key on the setup screen to enable live AI-generated analysis and negotiation.
           </p>
         )}
       </div>

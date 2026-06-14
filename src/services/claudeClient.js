@@ -41,3 +41,20 @@ export async function callClaude(systemPrompt, userPrompt, maxTokens = AI_MAX_TO
 export function isClaudeAvailable() {
   return model !== null;
 }
+
+export function parseJsonResponse(text) {
+  if (!text) return null;
+  // Try direct parse first
+  try { return JSON.parse(text.trim()); } catch {}
+  // Extract from code fences (```json ... ``` or ``` ... ```)
+  const fenceMatch = text.match(/```(?:json)?\s*\n?([\s\S]*?)\n?\s*```/);
+  if (fenceMatch) {
+    try { return JSON.parse(fenceMatch[1].trim()); } catch {}
+  }
+  // Extract first { ... } block
+  const braceMatch = text.match(/\{[\s\S]*\}/);
+  if (braceMatch) {
+    try { return JSON.parse(braceMatch[0]); } catch {}
+  }
+  return null;
+}

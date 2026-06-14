@@ -40,7 +40,7 @@ export default function Header() {
           <input
             id="api-key"
             type="password"
-            placeholder="AI API key (optional)"
+            placeholder="Gemini API key (optional)"
             value={state.config.apiKey}
             onChange={(e) => updateConfig({ apiKey: e.target.value })}
             className="bg-dark-700 border border-dark-600 rounded px-3 py-1.5 text-xs text-dark-200 w-52 placeholder:text-dark-500 focus:outline-none focus:border-accent-blue"
@@ -78,14 +78,14 @@ export default function Header() {
             <div className="space-y-2 text-xs text-dark-400">
               <div className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent-green mt-1.5 shrink-0" />
-                <p><span className="text-dark-200 font-medium">With API key:</span> 4 tools use real AI for severity assessment, counter-offers, negotiation, and justification.</p>
+                <p><span className="text-dark-200 font-medium">With Gemini key:</span> 4 tools use Google Gemini AI for severity assessment, counter-offers, negotiation, and justification.</p>
               </div>
               <div className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent-yellow mt-1.5 shrink-0" />
                 <p><span className="text-dark-200 font-medium">Without key (Demo):</span> Hardcoded fallbacks used instead. Full simulation works identically — no features lost.</p>
               </div>
               <div className="mt-2 p-2 bg-dark-900 rounded text-[11px] text-dark-500">
-                Get a key at console.anthropic.com (Claude API). Key stays in-browser only.
+                Get a key at aistudio.google.com. Key stays in-browser only.
               </div>
             </div>
           </div>

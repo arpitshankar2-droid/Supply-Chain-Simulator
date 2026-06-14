@@ -1,4 +1,4 @@
-import { callClaude, isClaudeAvailable } from '../../claudeClient';
+import { callClaude, isClaudeAvailable, parseJsonResponse } from '../../claudeClient';
 import { FALLBACK_RESPONSES } from '../../../data/fallbackResponses';
 
 export async function simulateCarrierReply(carrier, counterOffer, spotRateData) {
@@ -13,7 +13,7 @@ export async function simulateCarrierReply(carrier, counterOffer, spotRateData) 
     : Math.round(spotRateData.currentSpotRate * 0.95);
 
   if (isClaudeAvailable()) {
-    const systemPrompt = `You are simulating an Indian freight carrier's reply to a rate negotiation in INR. Respond in JSON format with fields: accepted (boolean), finalRate (number in INR or null), message (1-2 sentences from the carrier's perspective), counterOffer (number in INR or null if accepted).`;
+    const systemPrompt = `You are simulating an Indian freight carrier's reply to a rate negotiation in INR. Respond ONLY with a JSON object (no markdown, no explanation) with fields: accepted (boolean), finalRate (number in INR or null), message (1-2 sentences from the carrier's perspective, vary your phrasing), counterOffer (number in INR or null if accepted).`;
     const userPrompt = `Simulate ${carrier.name}'s reply to this counter-offer on Indian routes:
 - Counter-offer rate: ₹${counterOffer.counterRate.toLocaleString('en-IN')}
 - Their original spot rate: ₹${spotRateData.currentSpotRate.toLocaleString('en-IN')}
@@ -23,21 +23,17 @@ export async function simulateCarrierReply(carrier, counterOffer, spotRateData) 
 ${accepted ? `- Settle at: ₹${finalRate.toLocaleString('en-IN')}` : `- Counter back at: ₹${carrierCounter.toLocaleString('en-IN')}`}`;
 
     const response = await callClaude(systemPrompt, userPrompt, 300);
-    if (response) {
-      try {
-        const parsed = JSON.parse(response.replace(/```json\n?|\n?```/g, '').trim());
-        return {
-          data: {
-            accepted: parsed.accepted ?? accepted,
-            finalRate: parsed.finalRate ?? finalRate,
-            message: parsed.message,
-            counterOffer: parsed.counterOffer ?? carrierCounter,
-          },
-          source: 'claude',
-        };
-      } catch {
-        // Fall through
-      }
+    const parsed = parseJsonResponse(response);
+    if (parsed && parsed.message) {
+      return {
+        data: {
+          accepted: parsed.accepted ?? accepted,
+          finalRate: parsed.finalRate ?? finalRate,
+          message: parsed.message,
+          counterOffer: parsed.counterOffer ?? carrierCounter,
+        },
+        source: 'claude',
+      };
     }
   }
 
